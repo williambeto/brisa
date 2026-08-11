@@ -1,0 +1,11 @@
+# BEGIN AI WORKFLOW KIT
+# AI Workflow Kit generated files
+.ai-workflow-backups/
+.ai-workflow/
+*.tgz
+EVIDENCE.json
+node_modules/
+opencode
+opencode.jsonc.backup.*
+opencode/
+# END AI WORKFLOW KIT

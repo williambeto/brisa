@@ -1,0 +1,17 @@
+{
+  "name": "open-meteo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "validate": "ai-workflow collect-evidence"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@williambeto/ai-workflow": "^2.9.21"
+  }
+}

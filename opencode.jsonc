@@ -1,0 +1,369 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "Atlas",
+  "subagent_depth": 2,
+  "agent": {
+    "Atlas": {
+      "mode": "primary",
+      "description": "Router and workflow coordinator for AI Workflow Kit",
+      "prompt": "{file:./.ai-workflow/opencode/agents/atlas.md}",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "Nexus": "allow",
+          "Orion": "allow",
+          "Astra": "allow",
+          "Sage": "allow",
+          "Phoenix": "allow",
+          "Architecture-Specialist": "allow",
+          "Backend-Engineer": "allow",
+          "Deployment-Specialist": "allow",
+          "Design-Specialist": "allow",
+          "Docs-Engineer": "allow",
+          "Frontend-Engineer": "allow",
+          "Frontend-Design-System-Specialist": "allow",
+          "Full-Stack-Engineer": "allow",
+          "Token-Economist": "allow",
+          "PR-Manager": "allow",
+          "Discovery-Analyst": "allow",
+          "Product-Planner": "allow",
+          "Memory-Guardian": "allow",
+          "Prompt-Engineer": "allow",
+          "QA-Engineer": "allow",
+          "Refactoring-Specialist": "allow",
+          "Release-Specialist": "allow",
+          "SDD-Specialist": "allow",
+          "Technical-Leader": "allow",
+          "UI-UX-Engineer": "allow"
+        }
+      }
+    },
+    "Nexus": {
+      "mode": "all",
+      "description": "Discovery, requirement, scope, and specification owner",
+      "prompt": "{file:./.ai-workflow/opencode/agents/nexus.md}",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "Architecture-Specialist": "allow",
+          "Backend-Engineer": "allow",
+          "Deployment-Specialist": "allow",
+          "Design-Specialist": "allow",
+          "Docs-Engineer": "allow",
+          "Frontend-Engineer": "allow",
+          "Frontend-Design-System-Specialist": "allow",
+          "Full-Stack-Engineer": "allow",
+          "Token-Economist": "allow",
+          "PR-Manager": "allow",
+          "Discovery-Analyst": "allow",
+          "Product-Planner": "allow",
+          "Memory-Guardian": "allow",
+          "Prompt-Engineer": "allow",
+          "QA-Engineer": "allow",
+          "Refactoring-Specialist": "allow",
+          "Release-Specialist": "allow",
+          "SDD-Specialist": "allow",
+          "Technical-Leader": "allow",
+          "UI-UX-Engineer": "allow"
+        }
+      }
+    },
+    "Orion": {
+      "mode": "all",
+      "description": "Planning, PR sequencing, release, and deployment strategy owner",
+      "prompt": "{file:./.ai-workflow/opencode/agents/orion.md}",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "Architecture-Specialist": "allow",
+          "Backend-Engineer": "allow",
+          "Deployment-Specialist": "allow",
+          "Design-Specialist": "allow",
+          "Docs-Engineer": "allow",
+          "Frontend-Engineer": "allow",
+          "Frontend-Design-System-Specialist": "allow",
+          "Full-Stack-Engineer": "allow",
+          "Token-Economist": "allow",
+          "PR-Manager": "allow",
+          "Discovery-Analyst": "allow",
+          "Product-Planner": "allow",
+          "Memory-Guardian": "allow",
+          "Prompt-Engineer": "allow",
+          "QA-Engineer": "allow",
+          "Refactoring-Specialist": "allow",
+          "Release-Specialist": "allow",
+          "SDD-Specialist": "allow",
+          "Technical-Leader": "allow",
+          "UI-UX-Engineer": "allow"
+        }
+      }
+    },
+    "Astra": {
+      "mode": "all",
+      "description": "Implementation owner for incremental, scoped workspace changes",
+      "prompt": "{file:./.ai-workflow/opencode/agents/astra.md}",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "Architecture-Specialist": "allow",
+          "Backend-Engineer": "allow",
+          "Deployment-Specialist": "allow",
+          "Design-Specialist": "allow",
+          "Docs-Engineer": "allow",
+          "Frontend-Engineer": "allow",
+          "Frontend-Design-System-Specialist": "allow",
+          "Full-Stack-Engineer": "allow",
+          "Token-Economist": "allow",
+          "PR-Manager": "allow",
+          "Discovery-Analyst": "allow",
+          "Product-Planner": "allow",
+          "Memory-Guardian": "allow",
+          "Prompt-Engineer": "allow",
+          "QA-Engineer": "allow",
+          "Refactoring-Specialist": "allow",
+          "Release-Specialist": "allow",
+          "SDD-Specialist": "allow",
+          "Technical-Leader": "allow",
+          "UI-UX-Engineer": "allow"
+        }
+      }
+    },
+    "Sage": {
+      "mode": "all",
+      "description": "Audit, validation, evidence, and quality gate owner",
+      "prompt": "{file:./.ai-workflow/opencode/agents/sage.md}",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "Architecture-Specialist": "allow",
+          "Backend-Engineer": "allow",
+          "Deployment-Specialist": "allow",
+          "Design-Specialist": "allow",
+          "Docs-Engineer": "allow",
+          "Frontend-Engineer": "allow",
+          "Frontend-Design-System-Specialist": "allow",
+          "Full-Stack-Engineer": "allow",
+          "Token-Economist": "allow",
+          "PR-Manager": "allow",
+          "Discovery-Analyst": "allow",
+          "Product-Planner": "allow",
+          "Memory-Guardian": "allow",
+          "Prompt-Engineer": "allow",
+          "QA-Engineer": "allow",
+          "Refactoring-Specialist": "allow",
+          "Release-Specialist": "allow",
+          "SDD-Specialist": "allow",
+          "Technical-Leader": "allow",
+          "UI-UX-Engineer": "allow"
+        }
+      }
+    },
+    "Phoenix": {
+      "mode": "all",
+      "description": "Bounded remediation and regression recovery owner",
+      "prompt": "{file:./.ai-workflow/opencode/agents/phoenix.md}",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "Architecture-Specialist": "allow",
+          "Backend-Engineer": "allow",
+          "Deployment-Specialist": "allow",
+          "Design-Specialist": "allow",
+          "Docs-Engineer": "allow",
+          "Frontend-Engineer": "allow",
+          "Frontend-Design-System-Specialist": "allow",
+          "Full-Stack-Engineer": "allow",
+          "Token-Economist": "allow",
+          "PR-Manager": "allow",
+          "Discovery-Analyst": "allow",
+          "Product-Planner": "allow",
+          "Memory-Guardian": "allow",
+          "Prompt-Engineer": "allow",
+          "QA-Engineer": "allow",
+          "Refactoring-Specialist": "allow",
+          "Release-Specialist": "allow",
+          "SDD-Specialist": "allow",
+          "Technical-Leader": "allow",
+          "UI-UX-Engineer": "allow"
+        }
+      }
+    },
+    "Architecture-Specialist": {
+      "mode": "subagent",
+      "description": "Capability only: advise on the simplest safe architecture for current requirements",
+      "prompt": "{file:./.ai-workflow/opencode/skills/architecture/SKILL.md}"
+    },
+    "Backend-Engineer": {
+      "mode": "subagent",
+      "description": "Capability only: advise on PHP, Node, or Python APIs and persistence",
+      "prompt": "{file:./.ai-workflow/opencode/skills/backend-development/SKILL.md}"
+    },
+    "Deployment-Specialist": {
+      "mode": "subagent",
+      "description": "Capability only: analyze deployment, release, and production readiness",
+      "prompt": "{file:./.ai-workflow/opencode/skills/deployment/SKILL.md}"
+    },
+    "Design-Specialist": {
+      "mode": "subagent",
+      "description": "Capability only: advise on simple and maintainable design principles",
+      "prompt": "{file:./.ai-workflow/opencode/skills/design-principles/SKILL.md}"
+    },
+    "Docs-Engineer": {
+      "mode": "subagent",
+      "description": "Capability only: advise on documentation, READMEs, guides, and prompts",
+      "prompt": "{file:./.ai-workflow/opencode/skills/documentation/SKILL.md}"
+    },
+    "Frontend-Engineer": {
+      "mode": "subagent",
+      "description": "Capability only: advise on UI, state, routing, and accessibility",
+      "prompt": "{file:./.ai-workflow/opencode/skills/frontend-development/SKILL.md}"
+    },
+    "Frontend-Design-System-Specialist": {
+      "mode": "subagent",
+      "description": "Capability only: review CSS and HTML tokens, semantics, typography, and visual quality",
+      "prompt": "{file:./.ai-workflow/opencode/skills/frontend-design-system/SKILL.md}"
+    },
+    "Full-Stack-Engineer": {
+      "mode": "subagent",
+      "description": "Capability only: analyze frontend and backend integration as one testable increment",
+      "prompt": "{file:./.ai-workflow/opencode/skills/full-stack-development/SKILL.md}"
+    },
+    "Token-Economist": {
+      "mode": "subagent",
+      "description": "Capability only: analyze context size while preserving safe execution information",
+      "prompt": "{file:./.ai-workflow/opencode/skills/optimize-tokens/SKILL.md}"
+    },
+    "PR-Manager": {
+      "mode": "subagent",
+      "description": "Capability only: plan or review small pull requests while preserving scope",
+      "prompt": "{file:./.ai-workflow/opencode/skills/pr-workflow/SKILL.md}"
+    },
+    "Discovery-Analyst": {
+      "mode": "subagent",
+      "description": "Capability only: clarify ambiguous requests into actionable outcomes",
+      "prompt": "{file:./.ai-workflow/opencode/skills/product-discovery/SKILL.md}"
+    },
+    "Product-Planner": {
+      "mode": "subagent",
+      "description": "Capability only: shape clarified needs into scoped requirements",
+      "prompt": "{file:./.ai-workflow/opencode/skills/product-planning/SKILL.md}"
+    },
+    "Memory-Guardian": {
+      "mode": "subagent",
+      "description": "Capability only: advise on durable project decisions and recurring corrections",
+      "prompt": "{file:./.ai-workflow/opencode/skills/project-memory/SKILL.md}"
+    },
+    "Prompt-Engineer": {
+      "mode": "subagent",
+      "description": "Capability only: advise on prompts for agents and workflows",
+      "prompt": "{file:./.ai-workflow/opencode/skills/prompt-engineer/SKILL.md}"
+    },
+    "QA-Engineer": {
+      "mode": "subagent",
+      "description": "Capability only: design or review tests, acceptance criteria, and validation evidence",
+      "prompt": "{file:./.ai-workflow/opencode/skills/qa-workflow/SKILL.md}"
+    },
+    "Refactoring-Specialist": {
+      "mode": "subagent",
+      "description": "Capability only: review structure and behavior-preserving simplifications",
+      "prompt": "{file:./.ai-workflow/opencode/skills/refactoring/SKILL.md}"
+    },
+    "Release-Specialist": {
+      "mode": "subagent",
+      "description": "Capability only: analyze release readiness with explicit gates and evidence",
+      "prompt": "{file:./.ai-workflow/opencode/skills/release-workflow/SKILL.md}"
+    },
+    "SDD-Specialist": {
+      "mode": "subagent",
+      "description": "Capability only: shape approved requirements into testable specifications",
+      "prompt": "{file:./.ai-workflow/opencode/skills/spec-driven-development/SKILL.md}"
+    },
+    "Technical-Leader": {
+      "mode": "subagent",
+      "description": "Capability only: analyze technical decisions, architecture, and trade-offs",
+      "prompt": "{file:./.ai-workflow/opencode/skills/technical-leadership/SKILL.md}"
+    },
+    "UI-UX-Engineer": {
+      "mode": "subagent",
+      "description": "Capability only: review usability and interface clarity",
+      "prompt": "{file:./.ai-workflow/opencode/skills/ui-ux-design/SKILL.md}"
+    }
+  },
+  "skills": {
+    "paths": [
+      "./.ai-workflow/opencode/skills"
+    ]
+  },
+  "command": {
+    "atlas": {
+      "description": "Decide safest next step and delegate to the appropriate workflow or agent",
+      "agent": "Atlas",
+      "template": "{file:./.ai-workflow/opencode/commands/atlas.md}"
+    },
+    "run": {
+      "description": "Execute the master orchestration pipeline (Gates, SDD, Implementation, Validation, Healing)",
+      "agent": "Atlas",
+      "template": "{file:./.ai-workflow/opencode/commands/run.md}"
+    },
+    "discover": {
+      "description": "Understand the project, gather context, and create initial documentation",
+      "agent": "Nexus",
+      "template": "{file:./.ai-workflow/opencode/commands/discover.md}"
+    },
+    "spec-create": {
+      "description": "Create a clear specification before implementation",
+      "agent": "Nexus",
+      "template": "{file:./.ai-workflow/opencode/commands/spec-create.md}"
+    },
+    "spec-review": {
+      "description": "Review a specification and validate scope, risks, criteria, and gaps",
+      "agent": "Nexus",
+      "template": "{file:./.ai-workflow/opencode/commands/spec-review.md}"
+    },
+    "spec-implement": {
+      "description": "Implement an approved specification incrementally",
+      "agent": "Astra",
+      "template": "{file:./.ai-workflow/opencode/commands/spec-implement.md}"
+    },
+    "plan": {
+      "description": "Plan a task or change, defining steps, risks, and validation",
+      "agent": "Orion",
+      "template": "{file:./.ai-workflow/opencode/commands/plan.md}"
+    },
+    "implement": {
+      "description": "Implement a small task with defined scope",
+      "agent": "Astra",
+      "template": "{file:./.ai-workflow/opencode/commands/implement.md}"
+    },
+    "validate": {
+      "description": "Run project validations and collect evidence",
+      "agent": "Sage",
+      "template": "{file:./.ai-workflow/opencode/commands/validate.md}"
+    },
+    "audit": {
+      "description": "Audit the project, identify issues, and suggest prioritized improvements",
+      "agent": "Sage",
+      "template": "{file:./.ai-workflow/opencode/commands/audit.md}"
+    },
+    "optimize-tokens": {
+      "description": "Analyze workflow and context usage; suggest reductions without losing quality or evidence",
+      "agent": "Sage",
+      "template": "{file:./.ai-workflow/opencode/commands/optimize-tokens.md}"
+    },
+    "update-memory": {
+      "description": "Update durable project memory with relevant decisions, constraints, and reusable context",
+      "agent": "Nexus",
+      "template": "{file:./.ai-workflow/opencode/commands/update-memory.md}"
+    },
+    "release": {
+      "description": "Prepare delivery with commit, push, PR/merge readiness, changelog, and evidence",
+      "agent": "Orion",
+      "template": "{file:./.ai-workflow/opencode/commands/release.md}"
+    },
+    "deploy": {
+      "description": "Publish the project to the defined environment after validation and release readiness",
+      "agent": "Orion",
+      "template": "{file:./.ai-workflow/opencode/commands/deploy.md}"
+    }
+  }
+}
