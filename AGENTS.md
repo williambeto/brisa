@@ -39,3 +39,9 @@
 - Nunca implemente em `main` ou `master`.
 - Preserve alterações não commitadas alheias e mantenha o diff no escopo autorizado.
 - Exija autorização conversacional explícita antes de qualquer mutação, commit, tag ou push.
+
+## Memória de retomada
+- A entrega atual da Brisa foi mergeada em `main` no commit `0d251ef`; não há roadmap ou backlog de produto declarado.
+- `npm run check` é o gate canônico (`type-check → test → build`); `npm run test:package` cobre a fronteira de pacote.
+- Mantenha o Vitest limitado a `src/**/*.test.ts` e `tests/**/*.test.ts`; E2E deve permanecer em `e2e/` e ser executado pelo Playwright, evitando descoberta cruzada.
+- Evidências geradas pelo AIWK são artefatos de validação e não substituem esta memória rastreável.
