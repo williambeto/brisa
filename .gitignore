@@ -5,8 +5,8 @@
 *.tgz
 EVIDENCE.json
 node_modules/
-dist/
 opencode
 opencode.jsonc.backup.*
 opencode/
 # END AI WORKFLOW KIT
+dist/

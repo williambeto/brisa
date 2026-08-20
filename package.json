@@ -29,7 +29,7 @@
     "@playwright/test": "^1.62.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/test-utils": "^2.4.11",
-    "@williambeto/ai-workflow": "^2.9.21",
+    "@williambeto/ai-workflow": "^2.9.23",
     "jsdom": "^26.1.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.1",
