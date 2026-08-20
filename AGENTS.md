@@ -1,47 +1,37 @@
 # AGENTS.md
 
 ## Projeto
-- Brisa é um único pacote e uma SPA Vue 3 client-only; não há backend, router nem store.
-- `src/main.ts` monta `src/App.vue` e carrega o CSS global.
-- Use Node `^20.19.0` ou `>=22.12.0`, conforme a exigência do Vite registrada no lockfile.
+- Brisa é um único pacote: SPA Vue 3 client-only, sem backend, router ou store.
+- `src/main.ts` é o entrypoint: monta `src/App.vue` e carrega `src/styles.css`.
+- Use Node `^20.19.0` ou `>=22.12.0`, faixa exigida pelo Vite no lockfile.
 
-## Comandos e artefatos
-- O gate canônico é `npm run check`; ele executa exatamente `type-check → test → build`.
-- Para um teste focado, use `npm test -- <arquivo.test.ts>`; `npm test -- src/services/openMeteo.test.ts` é verificado.
-- `npm run validate` coleta evidências do AI Workflow e não substitui o gate da aplicação.
-- Não há CI, hooks, task runner, ESLint ou formatter configurados; não invente esses gates.
-- `dist/` é gerado e ignorado; nunca o edite.
-
-## Fronteiras da aplicação
+## Fronteiras
 - `src/App.vue` orquestra localidade, unidade, status e requisição de previsão.
-- `src/components/CitySearch.vue` concentra debounce, combobox/teclado e cancelamento da busca.
-- `src/services/openMeteo.ts` é a fronteira exclusiva das APIs de geocoding e previsão e normaliza payloads não confiáveis para `src/types/weather.ts`.
-- Componentes devem consumir o domínio normalizado, nunca campos crus da API.
-- Mapeamentos WMO, categorias e ícones ficam em `src/utils/weather.ts`; o SVG correspondente fica em `src/components/WeatherIcon.vue`.
-- Formatação pt-BR e de horários fica em `src/utils/formatters.ts`.
-- Persistência defensiva e fallback para São Paulo ficam em `src/utils/storage.ts`.
+- `src/components/CitySearch.vue` concentra debounce, combobox/teclado, estados da busca, cancelamento e cleanup.
+- `src/services/openMeteo.ts` é a única fronteira das APIs Open-Meteo de geocoding e previsão; normaliza payloads não confiáveis para `src/types/weather.ts`.
+- Componentes consomem somente o domínio normalizado; nunca campos crus da API.
+- `src/utils/weather.ts` mapeia WMO, categorias e ícones (`WeatherIcon.vue` renderiza o SVG); `src/utils/formatters.ts` trata pt-BR e horários; `src/utils/storage.ts` faz persistência defensiva e fallback para São Paulo.
 
-## Invariantes de dados
-- Open-Meteo usa `timezone=auto` e devolve horários locais sem offset.
-- `formatHour` extrai deliberadamente a hora da string; não passe esses timestamps por `Date` de modo que aplique o fuso do navegador.
-- A troca °C/°F refaz a requisição com `temperature_unit`; não faça conversão parcial no cliente.
-- Ao mudar campos de previsão, mantenha juntos arrays de query, normalizador, tipos e `src/services/openMeteo.test.ts`.
-- Ao mudar WMO ou storage, atualize respectivamente `src/utils/weather.test.ts` ou `src/utils/storage.test.ts`.
-- Preserve cancelamento de requests e cleanup no unmount na busca e na previsão para impedir respostas obsoletas de sobrescrever o estado.
+## Dados e concorrência
+- Open-Meteo usa `timezone=auto` e devolve timestamps locais sem offset. `formatHour` extrai a hora da string; não passe esses timestamps por `Date` se isso aplicar o fuso do navegador.
+- Trocar °C/°F refaz a previsão com `temperature_unit`; não faça conversão parcial no cliente.
+- Preserve cancelamento e cleanup no unmount na busca e na previsão; respostas obsoletas não podem sobrescrever o estado.
+- Ao alterar campos de previsão, atualize juntos arrays da query, normalizador, tipos e `src/services/openMeteo.test.ts`. Ao alterar WMO, atualize `src/utils/weather.test.ts`; ao alterar storage, atualize `src/utils/storage.test.ts`.
 
-## Produto
-- Interface e cópia são pt-BR, a marca é Brisa e a atribuição pública à Open-Meteo deve permanecer.
+## Comandos e testes
+- Instale e rode localmente com `npm install` e `npm run dev`.
+- O gate `npm run check` executa exatamente `type-check → test → build`.
+- Para foco, use `npm test -- <arquivo.test.ts>`; `npm run test:package` valida a fronteira do pacote; `npm run test:e2e` executa o Playwright.
+- `npm run validate` coleta evidências do AI Workflow e não substitui `npm run check`.
+- O Vitest descobre somente `src/**/*.test.ts` e `tests/**/*.test.ts`, excluindo `e2e/**`; o Playwright usa `e2e/` isoladamente. As fixtures bloqueiam HTTP(S) e WebSocket externos não mockados.
+- Não há lint, formatter, CI ou task runner configurados; não invente esses gates. `dist/` é gerado e ignorado; nunca o edite.
 
-## OpenCode e segurança Git
-- `opencode.jsonc` configura o OpenCode e aponta para o conteúdo gerado e ignorado em `.ai-workflow/`.
-- Em tarefas normais da aplicação, não edite `opencode.jsonc` nem `.ai-workflow/`.
-- `.ai-workflow/AGENTS.md` é o contrato canônico do tooling: leia e preserve, sem copiá-lo para cá.
+## Produto e tooling
+- Interface e cópia são pt-BR; a marca é Brisa e a atribuição pública à Open-Meteo deve permanecer.
+- `opencode.jsonc` configura o OpenCode e aponta para conteúdo gerado/ignorado em `.ai-workflow/`; em tarefas normais da aplicação, não edite `opencode.jsonc` nem `.ai-workflow/`.
+- `.ai-workflow/AGENTS.md` é o contrato canônico do tooling: leia e preserve, sem copiá-lo ou editá-lo em tarefas normais.
+
+## Git
 - Nunca implemente em `main` ou `master`.
 - Preserve alterações não commitadas alheias e mantenha o diff no escopo autorizado.
-- Exija autorização conversacional explícita antes de qualquer mutação, commit, tag ou push.
-
-## Memória de retomada
-- A entrega atual da Brisa foi mergeada em `main` no commit `0d251ef`; não há roadmap ou backlog de produto declarado.
-- `npm run check` é o gate canônico (`type-check → test → build`); `npm run test:package` cobre a fronteira de pacote.
-- Mantenha o Vitest limitado a `src/**/*.test.ts` e `tests/**/*.test.ts`; E2E deve permanecer em `e2e/` e ser executado pelo Playwright, evitando descoberta cruzada.
-- Evidências geradas pelo AIWK são artefatos de validação e não substituem esta memória rastreável.
+- Exija autorização conversacional explícita antes de qualquer alteração no repositório, commit, tag ou push.
