@@ -50,12 +50,15 @@ export function weatherFixture(unit: 'celsius' | 'fahrenheit', night = false) {
       weather_code: night ? 0 : 1,
       wind_speed_10m: 14,
       is_day: night ? 0 : 1,
+      uv_index: 5,
+      surface_pressure: 1013,
     },
     current_units: {
       temperature_2m: unitLabel,
       relative_humidity_2m: '%',
       precipitation: 'mm',
       wind_speed_10m: 'km/h',
+      surface_pressure: 'hPa',
     },
     hourly: {
       time: hours,
@@ -74,6 +77,7 @@ export function weatherFixture(unit: 'celsius' | 'fahrenheit', night = false) {
       sunrise: dates.map((date) => `${date}T06:22`),
       sunset: dates.map((date) => `${date}T17:48`),
       wind_speed_10m_max: dates.map((_, index) => 18 + index),
+      uv_index_max: dates.map(() => 6),
     },
     daily_units: { wind_speed_10m_max: 'km/h' },
   }

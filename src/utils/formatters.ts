@@ -40,6 +40,25 @@ export function formatMeasurement(value: number | null, unit: string) {
   return `${decimalFormatter.format(value)} ${unit}`
 }
 
+export function formatUvIndex(value: number | null) {
+  if (value === null || !Number.isFinite(value)) return 'Indisponível'
+  return decimalFormatter.format(value)
+}
+
+export function formatUvCategory(value: number | null) {
+  if (value === null || !Number.isFinite(value)) return 'Indisponível'
+  if (value < 3) return 'Baixo'
+  if (value < 6) return 'Moderado'
+  if (value < 8) return 'Alto'
+  if (value < 11) return 'Muito alto'
+  return 'Extremo'
+}
+
+export function formatUvDescription(value: number | null) {
+  if (value === null || !Number.isFinite(value)) return 'Indisponível'
+  return `${formatUvIndex(value)} (${formatUvCategory(value)})`
+}
+
 export function formatHour(time: string) {
   const hour = time.match(/^\d{4}-\d{2}-\d{2}T([01]\d|2[0-3]):([0-5]\d)$/)
   return hour ? `${hour[1]}:${hour[2]}` : 'Horário indisponível'

@@ -132,3 +132,35 @@ test('storage inválido usa fallback local e fixture noturna', async ({ page, mo
   await expect(page.locator('.app-shell')).toHaveAttribute('data-period', 'night')
   await audit(page, testInfo, 'fallback-night')
 })
+
+test('exibe métricas de índice UV e pressão atmosférica com auditoria de acessibilidade', async ({ page, mockOpenMeteo }, testInfo) => {
+  mockOpenMeteo({ forecast: ok(celsiusForecast) })
+  await openSuccess(page)
+  await expect(page.getByText('Índice UV')).toBeVisible()
+  await expect(page.getByText('Pressão')).toBeVisible()
+  await expect(page.getByText('1.013 hPa')).toBeVisible()
+  await audit(page, testInfo, 'uv-pressure-metrics')
+})
+
+test('alterna tema visual entre claro, escuro e sistema preservando acessibilidade', async ({ page, mockOpenMeteo }, testInfo) => {
+  mockOpenMeteo({ forecast: ok(celsiusForecast) })
+  await openSuccess(page)
+  const shell = page.locator('.app-shell')
+
+  const darkButton = page.getByRole('button', { name: 'Tema escuro' })
+  await darkButton.click()
+  await expect(shell).toHaveAttribute('data-period', 'night')
+  await expect(shell).toHaveAttribute('data-theme', 'dark')
+  await audit(page, testInfo, 'theme-dark')
+
+  const lightButton = page.getByRole('button', { name: 'Tema claro' })
+  await lightButton.click()
+  await expect(shell).toHaveAttribute('data-period', 'day')
+  await expect(shell).toHaveAttribute('data-theme', 'light')
+  await audit(page, testInfo, 'theme-light')
+
+  const systemButton = page.getByRole('button', { name: 'Automático pelo sistema' })
+  await systemButton.click()
+  await expect(shell).toHaveAttribute('data-theme', 'system')
+  await audit(page, testInfo, 'theme-system')
+})

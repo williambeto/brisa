@@ -5,6 +5,7 @@ import CurrentMetrics from './components/CurrentMetrics.vue'
 import DailyForecast from './components/DailyForecast.vue'
 import ErrorBoundary from './components/ErrorBoundary.vue'
 import HourlyForecast from './components/HourlyForecast.vue'
+import ThemeToggle from './components/ThemeToggle.vue'
 import UnitToggle from './components/UnitToggle.vue'
 import WeatherIcon from './components/WeatherIcon.vue'
 import WeatherSkeleton from './components/WeatherSkeleton.vue'
@@ -15,7 +16,14 @@ import {
   formatTemperature,
   formatUpdatedAt,
 } from './utils/formatters'
-import { DEFAULT_LOCATION, readStoredLocation, saveStoredLocation } from './utils/storage'
+import {
+  DEFAULT_LOCATION,
+  readStoredLocation,
+  readStoredTheme,
+  saveStoredLocation,
+  saveStoredTheme,
+  type ThemePreference,
+} from './utils/storage'
 import { getWeatherDescription } from './utils/weather'
 
 type ViewStatus = 'initializing' | 'loading' | 'refreshing' | 'success' | 'error'
@@ -27,6 +35,8 @@ const status = ref<ViewStatus>('initializing')
 const confirmedUnit = ref<TemperatureUnit>('celsius')
 const requestedUnit = ref<TemperatureUnit>('celsius')
 const inFlightUnit = ref<TemperatureUnit | null>(null)
+const themePreference = ref<ThemePreference>('system')
+const systemDark = ref(false)
 const failedIntent = ref<{ location: WeatherLocation; unit: TemperatureUnit } | null>(null)
 const recoveryKey = ref(0)
 const errorMessage = ref('')
@@ -42,8 +52,19 @@ const currentDescription = computed(() =>
   ),
 )
 
+let themeMediaQuery: MediaQueryList | null = null
+
+function handleThemeMediaChange(event: MediaQueryListEvent) {
+  systemDark.value = event.matches
+}
+
 const atmosphere = computed(() => currentDescription.value.category)
-const period = computed(() => (forecast.value?.current.isDay === false ? 'night' : 'day'))
+const period = computed(() => {
+  if (themePreference.value === 'dark') return 'night'
+  if (themePreference.value === 'light') return 'day'
+  if (systemDark.value) return 'night'
+  return forecast.value?.current.isDay === false ? 'night' : 'day'
+})
 const isBusy = computed(() => ['initializing', 'loading', 'refreshing'].includes(status.value))
 const locationContext = computed(() =>
   location.value ? formatLocationContext(location.value) : 'Localização sendo preparada',
@@ -68,6 +89,12 @@ const statusMessage = computed(() => {
 
 onMounted(() => {
   mounted = true
+  themePreference.value = readStoredTheme()
+  if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
+    themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    systemDark.value = themeMediaQuery.matches
+    themeMediaQuery.addEventListener?.('change', handleThemeMediaChange)
+  }
   const initialLocation = readStoredLocation() ?? DEFAULT_LOCATION
   void requestForecast(initialLocation, requestedUnit.value)
 })
@@ -77,6 +104,8 @@ onBeforeUnmount(() => {
   requestToken += 1
   weatherController?.abort()
   weatherController = null
+  themeMediaQuery?.removeEventListener?.('change', handleThemeMediaChange)
+  themeMediaQuery = null
 })
 
 async function requestForecast(target: WeatherLocation, nextUnit: TemperatureUnit, force = false) {
@@ -148,6 +177,11 @@ function changeUnit(nextUnit: TemperatureUnit) {
   void requestForecast(target, nextUnit)
 }
 
+function changeTheme(nextTheme: ThemePreference) {
+  themePreference.value = nextTheme
+  saveStoredTheme(nextTheme)
+}
+
 function retry() {
   if (isBusy.value) return
   const intent = failedIntent.value ?? (requestedLocation.value
@@ -177,7 +211,7 @@ function unitLabel(value: TemperatureUnit | null) {
 </script>
 
 <template>
-  <div class="app-shell" :data-weather="atmosphere" :data-period="period">
+  <div class="app-shell" :data-weather="atmosphere" :data-period="period" :data-theme="themePreference">
     <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
 
     <div class="atmosphere" aria-hidden="true">
@@ -197,11 +231,17 @@ function unitLabel(value: TemperatureUnit | null) {
           <small>meteorologia cotidiana</small>
         </div>
 
-        <UnitToggle
-          :model-value="confirmedUnit"
-          :disabled="!requestedLocation && !location"
-          @change="changeUnit"
-        />
+        <div class="site-header__actions">
+          <ThemeToggle
+            :model-value="themePreference"
+            @change="changeTheme"
+          />
+          <UnitToggle
+            :model-value="confirmedUnit"
+            :disabled="!requestedLocation && !location"
+            @change="changeUnit"
+          />
+        </div>
       </div>
     </header>
 

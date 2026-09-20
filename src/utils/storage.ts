@@ -71,6 +71,35 @@ export function saveStoredLocation(location: WeatherLocation, storage?: StorageL
   }
 }
 
+export type ThemePreference = 'system' | 'light' | 'dark'
+export const DEFAULT_THEME: ThemePreference = 'system'
+export const THEME_STORAGE_KEY = 'brisa:theme-preference'
+
+export function readStoredTheme(storage?: StorageLike | null): ThemePreference {
+  const target = storage ?? getBrowserStorage()
+  if (!target) return DEFAULT_THEME
+
+  try {
+    const value = target.getItem(THEME_STORAGE_KEY)
+    if (value === 'light' || value === 'dark' || value === 'system') return value
+    return DEFAULT_THEME
+  } catch {
+    return DEFAULT_THEME
+  }
+}
+
+export function saveStoredTheme(theme: ThemePreference, storage?: StorageLike | null): boolean {
+  const target = storage ?? getBrowserStorage()
+  if (!target) return false
+
+  try {
+    target.setItem(THEME_STORAGE_KEY, theme)
+    return true
+  } catch {
+    return false
+  }
+}
+
 function getBrowserStorage(): StorageLike | null {
   if (typeof window === 'undefined') return null
   try {

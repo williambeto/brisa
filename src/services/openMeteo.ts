@@ -17,6 +17,8 @@ const CURRENT_FIELDS = [
   'weather_code',
   'wind_speed_10m',
   'is_day',
+  'uv_index',
+  'surface_pressure',
 ]
 
 const HOURLY_FIELDS = [
@@ -34,6 +36,7 @@ const DAILY_FIELDS = [
   'sunrise',
   'sunset',
   'wind_speed_10m_max',
+  'uv_index_max',
 ]
 
 export class OpenMeteoRequestError extends Error {
@@ -130,6 +133,7 @@ export function normalizeForecast(payload: unknown, unit: TemperatureUnit): Weat
     sunrise: readStringAt(daily.sunrise, index),
     sunset: readStringAt(daily.sunset, index),
     windSpeedMax: readNumberAt(daily.wind_speed_10m_max, index),
+    uvIndexMax: readNumberAt(daily.uv_index_max, index),
   }))
 
   if (!currentTime && hourlyForecast.length === 0 && dailyForecast.length === 0) {
@@ -150,6 +154,8 @@ export function normalizeForecast(payload: unknown, unit: TemperatureUnit): Weat
       weatherCode: readNumber(current.weather_code),
       windSpeed: readNumber(current.wind_speed_10m),
       isDay: readBoolean(current.is_day),
+      uvIndex: readNumber(current.uv_index),
+      surfacePressure: readNumber(current.surface_pressure),
     },
     hourly: hourlyForecast,
     daily: dailyForecast,
@@ -161,6 +167,8 @@ export function normalizeForecast(payload: unknown, unit: TemperatureUnit): Weat
       precipitationProbability: readString(hourlyUnits.precipitation_probability) ?? '%',
       windSpeed:
         readString(currentUnits.wind_speed_10m) ?? readString(dailyUnits.wind_speed_10m_max) ?? 'km/h',
+      surfacePressure: readString(currentUnits.surface_pressure) ?? 'hPa',
+      uvIndex: '',
     },
   }
 }
