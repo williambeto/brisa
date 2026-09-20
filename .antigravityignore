@@ -1,0 +1,10 @@
+.ai-workflow/
+.ai-workflow-backups/
+node_modules/
+.git/
+EVIDENCE.json
+*.tgz
+*.zip
+*.tar
+.agents/tmp/
+.agents/history/

@@ -9,11 +9,6 @@
       "permission": {
         "task": {
           "*": "deny",
-          "Nexus": "allow",
-          "Orion": "allow",
-          "Astra": "allow",
-          "Sage": "allow",
-          "Phoenix": "allow",
           "Architecture-Specialist": "allow",
           "Backend-Engineer": "allow",
           "Deployment-Specialist": "allow",
@@ -33,7 +28,12 @@
           "Release-Specialist": "allow",
           "SDD-Specialist": "allow",
           "Technical-Leader": "allow",
-          "UI-UX-Engineer": "allow"
+          "UI-UX-Engineer": "allow",
+          "Nexus": "allow",
+          "Orion": "allow",
+          "Astra": "allow",
+          "Sage": "allow",
+          "Phoenix": "allow"
         }
       }
     },
@@ -153,7 +153,8 @@
           "Release-Specialist": "allow",
           "SDD-Specialist": "allow",
           "Technical-Leader": "allow",
-          "UI-UX-Engineer": "allow"
+          "UI-UX-Engineer": "allow",
+          "Astra": "allow"
         }
       }
     },
