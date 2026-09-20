@@ -9,6 +9,9 @@ import {
   formatTemperature,
   formatTemperatureValue,
   formatUpdatedAt,
+  formatUvCategory,
+  formatUvDescription,
+  formatUvIndex,
 } from './formatters'
 
 describe('formatadores pt-BR', () => {
@@ -32,6 +35,9 @@ describe('formatadores pt-BR', () => {
     expect(formatTemperatureValue(Number.POSITIVE_INFINITY)).toBe('—')
     expect(formatPercent(null)).toBe('Indisponível')
     expect(formatMeasurement(Number.NaN, 'km/h')).toBe('Indisponível')
+    expect(formatUvIndex(null)).toBe('Indisponível')
+    expect(formatUvCategory(null)).toBe('Indisponível')
+    expect(formatUvDescription(null)).toBe('Indisponível')
     expect(formatDay('inválido', 1)).toBe('Dia')
     expect(formatShortDate('inválida')).toBe('Data indisponível')
   })
@@ -49,5 +55,12 @@ describe('formatadores pt-BR', () => {
       latitude: -23.55,
       longitude: -46.63,
     })).toBe('Brasil')
+    expect(formatUvIndex(5.2)).toBe('5,2')
+    expect(formatUvCategory(1)).toBe('Baixo')
+    expect(formatUvCategory(4)).toBe('Moderado')
+    expect(formatUvCategory(6.5)).toBe('Alto')
+    expect(formatUvCategory(9)).toBe('Muito alto')
+    expect(formatUvCategory(11.5)).toBe('Extremo')
+    expect(formatUvDescription(6.5)).toBe('6,5 (Alto)')
   })
 })

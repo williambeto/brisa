@@ -59,12 +59,15 @@ describe('cliente Open-Meteo', () => {
           weather_code: 2,
           wind_speed_10m: 12.2,
           is_day: 1,
+          uv_index: 5.5,
+          surface_pressure: 1012.4,
         },
         current_units: {
           temperature_2m: '°C',
           relative_humidity_2m: '%',
           precipitation: 'mm',
           wind_speed_10m: 'km/h',
+          surface_pressure: 'hPa',
         },
         hourly: {
           time: hourlyTimes,
@@ -83,6 +86,7 @@ describe('cliente Open-Meteo', () => {
           sunrise: Array.from({ length: 7 }, () => '2026-08-11T06:30'),
           sunset: Array.from({ length: 7 }, () => '2026-08-11T17:45'),
           wind_speed_10m_max: [20, 18, 24, 15, 17, 26, 31],
+          uv_index_max: [6, 7, 5, 8, 8, 4, 3],
         },
         daily_units: { wind_speed_10m_max: 'km/h' },
       }),
@@ -92,13 +96,20 @@ describe('cliente Open-Meteo', () => {
     const requestedUrl = new URL(String(fetchMock.mock.calls[0]?.[0]))
 
     expect(requestedUrl.searchParams.get('current')).toContain('apparent_temperature')
+    expect(requestedUrl.searchParams.get('current')).toContain('uv_index')
+    expect(requestedUrl.searchParams.get('current')).toContain('surface_pressure')
     expect(requestedUrl.searchParams.get('daily')).toContain('precipitation_probability_max')
+    expect(requestedUrl.searchParams.get('daily')).toContain('uv_index_max')
     expect(requestedUrl.searchParams.get('timezone')).toBe('auto')
     expect(requestedUrl.searchParams.get('temperature_unit')).toBe('celsius')
     expect(forecast.hourly).toHaveLength(24)
     expect(forecast.hourly[0]).toMatchObject({ time: '2026-08-11T10:00', temperature: 1 })
     expect(forecast.daily).toHaveLength(7)
+    expect(forecast.daily[0]?.uvIndexMax).toBe(6)
     expect(forecast.current.isDay).toBe(true)
+    expect(forecast.current.uvIndex).toBe(5.5)
+    expect(forecast.current.surfacePressure).toBe(1012.4)
+    expect(forecast.units.surfacePressure).toBe('hPa')
   })
 
   it('transforma erros HTTP em uma falha de domínio acionável', async () => {

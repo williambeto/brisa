@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { parseStoredLocation, readStoredLocation, saveStoredLocation } from './storage'
+import {
+  parseStoredLocation,
+  readStoredLocation,
+  readStoredTheme,
+  saveStoredLocation,
+  saveStoredTheme,
+} from './storage'
 
 describe('persistência da localização', () => {
   it('aceita somente uma localização válida e dentro dos limites geográficos', () => {
@@ -58,6 +64,47 @@ describe('persistência da localização', () => {
         saveStoredLocation({ name: 'Recife', country: 'Brasil', latitude: -8.05, longitude: -34.9 }),
       ).toBe(false)
     })
+  })
+})
+
+describe('persistência do tema', () => {
+  it('retorna tema padrão (system) quando o storage está vazio ou contém valor inválido', () => {
+    const memory = new Map<string, string>()
+    const storage = {
+      getItem: (k: string) => memory.get(k) ?? null,
+      setItem: (k: string, v: string) => { memory.set(k, v) },
+    }
+
+    expect(readStoredTheme(storage)).toBe('system')
+    memory.set('brisa:theme-preference', 'invalido')
+    expect(readStoredTheme(storage)).toBe('system')
+  })
+
+  it('grava e lê preferências de tema válidas', () => {
+    const memory = new Map<string, string>()
+    const storage = {
+      getItem: (k: string) => memory.get(k) ?? null,
+      setItem: (k: string, v: string) => { memory.set(k, v) },
+    }
+
+    expect(saveStoredTheme('dark', storage)).toBe(true)
+    expect(readStoredTheme(storage)).toBe('dark')
+
+    expect(saveStoredTheme('light', storage)).toBe(true)
+    expect(readStoredTheme(storage)).toBe('light')
+
+    expect(saveStoredTheme('system', storage)).toBe(true)
+    expect(readStoredTheme(storage)).toBe('system')
+  })
+
+  it('lida defensivamente com erros no storage ao ler e gravar tema', () => {
+    const brokenStorage = {
+      getItem: () => { throw new Error('bloqueado') },
+      setItem: () => { throw new Error('bloqueado') },
+    }
+
+    expect(readStoredTheme(brokenStorage)).toBe('system')
+    expect(saveStoredTheme('dark', brokenStorage)).toBe(false)
   })
 })
 

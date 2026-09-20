@@ -32,6 +32,7 @@ describe('DailyForecast', () => {
       sunrise: null,
       sunset: null,
       windSpeedMax: null,
+      uvIndexMax: null,
     }
     const wrapper = mount(DailyForecast, { props: { forecast } })
     const name = wrapper.get('.daily-row').attributes('aria-label')

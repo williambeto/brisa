@@ -350,6 +350,55 @@ svg {
   box-shadow: 0 2px 12px rgba(19, 46, 54, 0.12);
 }
 
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.theme-toggle {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0;
+  padding: var(--space-1);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-round);
+  background: var(--color-surface);
+}
+
+.theme-toggle__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+  padding: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-round);
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.theme-toggle__button svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.theme-toggle__button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.theme-toggle__button--active {
+  color: var(--color-control-text);
+  background: var(--color-control-surface);
+  box-shadow: 0 2px 12px rgba(19, 46, 54, 0.12);
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
@@ -927,7 +976,8 @@ svg {
 
 .metrics-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4) 0;
   margin: 0;
 }
 
@@ -940,7 +990,7 @@ svg {
   border-left: 1px solid var(--color-line);
 }
 
-.metric:first-child {
+.metric:nth-child(3n + 1) {
   padding-left: 0;
   border-left: 0;
 }
@@ -1351,7 +1401,12 @@ svg {
     gap: var(--space-5) 0;
   }
 
-  .metric:nth-child(3) {
+  .metric:nth-child(3n + 1) {
+    padding-left: var(--space-4);
+    border-left: 1px solid var(--color-line);
+  }
+
+  .metric:nth-child(2n + 1) {
     padding-left: 0;
     border-left: 0;
   }
@@ -1578,6 +1633,16 @@ svg {
   .metric {
     grid-template-columns: 24px 1fr;
     padding-inline: var(--space-3);
+  }
+
+  .metric:nth-child(3n + 1) {
+    padding-left: var(--space-3);
+    border-left: 1px solid var(--color-line);
+  }
+
+  .metric:nth-child(2n + 1) {
+    padding-left: 0;
+    border-left: 0;
   }
 
   .metric svg {

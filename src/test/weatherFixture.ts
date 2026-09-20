@@ -19,6 +19,8 @@ export function weatherFixture(
       weatherCode: 2,
       windSpeed: 12,
       isDay: true,
+      uvIndex: 5,
+      surfacePressure: 1013,
     },
     hourly: [{
       time: '2026-08-14T10:00',
@@ -36,6 +38,7 @@ export function weatherFixture(
       sunrise: '2026-08-14T06:30',
       sunset: '2026-08-14T17:45',
       windSpeedMax: 20,
+      uvIndexMax: 6,
     }],
     units: {
       temperature: symbol,
@@ -43,6 +46,8 @@ export function weatherFixture(
       precipitation: 'mm',
       precipitationProbability: '%',
       windSpeed: 'km/h',
+      surfacePressure: 'hPa',
+      uvIndex: '',
     },
   }
 }

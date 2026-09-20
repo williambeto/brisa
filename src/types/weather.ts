@@ -20,6 +20,8 @@ export interface CurrentWeather {
   weatherCode: number | null
   windSpeed: number | null
   isDay: boolean | null
+  uvIndex: number | null
+  surfacePressure: number | null
 }
 
 export interface HourlyWeather {
@@ -39,6 +41,7 @@ export interface DailyWeather {
   sunrise: string | null
   sunset: string | null
   windSpeedMax: number | null
+  uvIndexMax: number | null
 }
 
 export interface WeatherUnits {
@@ -47,6 +50,8 @@ export interface WeatherUnits {
   precipitation: string
   precipitationProbability: string
   windSpeed: string
+  surfacePressure: string
+  uvIndex: string
 }
 
 export interface WeatherForecast {

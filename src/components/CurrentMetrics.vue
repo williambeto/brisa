@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import type { WeatherForecast } from '../types/weather'
-import { formatMeasurement, formatPercent, formatTemperature } from '../utils/formatters'
+import {
+  formatMeasurement,
+  formatPercent,
+  formatTemperature,
+  formatUvCategory,
+  formatUvIndex,
+} from '../utils/formatters'
 
 const props = defineProps<{
   forecast: WeatherForecast
@@ -46,6 +52,24 @@ const props = defineProps<{
         </svg>
         <dt>Vento</dt>
         <dd>{{ formatMeasurement(props.forecast.current.windSpeed, props.forecast.units.windSpeed) }}</dd>
+      </div>
+      <div class="metric">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+        </svg>
+        <dt>Índice UV</dt>
+        <dd :title="formatUvCategory(props.forecast.current.uvIndex)">
+          {{ formatUvIndex(props.forecast.current.uvIndex) }}
+        </dd>
+      </div>
+      <div class="metric">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Z" />
+          <path d="m14 10-3.5 3.5M12 7v1M7 12h1M16 12h1" />
+        </svg>
+        <dt>Pressão</dt>
+        <dd>{{ formatMeasurement(props.forecast.current.surfacePressure, props.forecast.units.surfacePressure) }}</dd>
       </div>
     </dl>
   </section>
